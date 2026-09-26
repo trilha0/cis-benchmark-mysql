@@ -455,16 +455,3 @@ echo "MANUAL : ${manual_count}"
 
 echo "Reports generated in ${report_dir}"
 ##################################################################
-
-
-
-#   3.8 Ensure Plugin Directory Has Appropriate Permissions
-plugin_dir=$(mysql --login-path=${login_path} -N -e "SELECT VARIABLE_VALUE FROM performance_schema.global_variables WHERE VARIABLE_NAME LIKE 'plugin_dir'")
-per=$(stat -c '%a' ${plugin_dir})
-
-if [[ ${per} == 550 || ${per} == 554 ]]
-then
-    pass "3.8" "Plugin directory has appropriate permissions"
-else
-    fail "3.8" "Plugin directory doesn't have appropriate permissions"
-fi
